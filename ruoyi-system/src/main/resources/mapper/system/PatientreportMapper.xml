@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.PatientreportMapper">
+    
+    <resultMap type="Patientreport" id="PatientreportResult">
+        <result property="reportid"    column="reportID"    />
+        <result property="patientid"    column="patientID"    />
+        <result property="patientname"    column="patientName"    />
+        <result property="doctor"    column="doctor"    />
+        <result property="patientinfomation"    column="patientInfomation"    />
+        <result property="patientphoto"    column="patientPhoto"    />
+        <result property="patientprogramme"    column="patientProgramme"    />
+        <result property="patientstatus"    column="patientstatus"    />
+        <result property="clinic"    column="clinic"    />
+        <result property="area"    column="area"    />
+        <result property="time"    column="time"    />
+        <result property="patientvideo"    column="patientvideo"    />
+        <result property="others"    column="others"    />
+    </resultMap>
+
+    <sql id="selectPatientreportVo">
+        select reportID, patientID, patientName, doctor, patientInfomation, patientPhoto,patientProgramme,patientstatus, clinic, area, time, patientvideo, others from patientreport
+         order by reportID desc
+    </sql>
+
+    <select id="selectPatientreportList" parameterType="Patientreport" resultMap="PatientreportResult">
+        <include refid="selectPatientreportVo"/>
+        <where>  
+            <if test="patientid != null  and patientid != ''"> and patientID = #{patientid}</if>
+            <if test="patientname != null  and patientname != ''"> and patientName like concat('%', #{patientname}, '%')</if>
+            <if test="doctor != null  and doctor != ''"> and doctor = #{doctor}</if>
+            <if test="patientinfomation != null  and patientinfomation != ''"> and patientInfomation = #{patientinfomation}</if>
+            <if test="patientphoto != null  and patientphoto != ''"> and patientPhoto = #{patientphoto}</if>
+            <if test="patientprogramme != null  and patientprogramme != ''"> and patientProgramme = #{patientprogramme}</if>
+            <if test="patientstatus != null  and patientstatus != ''"> and patientstatus = #{patientstatus}</if>
+            <if test="clinic != null  and clinic != ''"> and clinic = #{clinic}</if>
+            <if test="area != null  and area != ''"> and area = #{area}</if>
+            <if test="time != null "> and time = #{time}</if>
+            <if test="patientvideo != null  and patientvideo != ''"> and patientvideo = #{patientvideo}</if>
+            <if test="others != null  and others != ''"> and others = #{others}</if>
+        </where>
+        order by time desc
+    </select>
+    
+    <select id="selectPatientreportById" parameterType="Long" resultMap="PatientreportResult">
+        <include refid="selectPatientreportVo"/>
+        where reportID = #{reportid}
+    </select>
+        
+    <insert id="insertPatientreport" parameterType="Patientreport" useGeneratedKeys="true" keyProperty="reportid">
+        insert into patientreport
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientid != null  and patientid != ''">patientID,</if>
+            <if test="patientname != null  and patientname != ''">patientName,</if>
+            <if test="doctor != null  and doctor != ''">doctor,</if>
+            <if test="patientinfomation != null  and patientinfomation != ''">patientInfomation,</if>
+            <if test="patientphoto != null  and patientphoto != ''">patientPhoto,</if>
+            <if test="patientprogramme != null  and patientprogramme != ''">patientProgramme,</if>
+            <if test="patientstatus != null  and patientstatus != ''">patientstatus,</if>
+            <if test="clinic != null  and clinic != ''">clinic,</if>
+            <if test="area != null  and area != ''">area,</if>
+            <if test="time != null ">time,</if>
+            <if test="patientvideo != null  and patientvideo != ''">patientvideo,</if>
+            <if test="others != null  and others != ''">others,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientid != null  and patientid != ''">#{patientid},</if>
+            <if test="patientname != null  and patientname != ''">#{patientname},</if>
+            <if test="doctor != null  and doctor != ''">#{doctor},</if>
+            <if test="patientinfomation != null  and patientinfomation != ''">#{patientinfomation},</if>
+            <if test="patientphoto != null  and patientphoto != ''">#{patientphoto},</if>
+            <if test="patientprogramme != null  and patientprogramme != ''">#{patientprogramme},</if>
+            <if test="patientstatus != null  and patientstatus != ''">#{patientstatus},</if>
+            <if test="clinic != null  and clinic != ''">#{clinic},</if>
+            <if test="area != null  and area != ''">#{area},</if>
+            <if test="time != null ">#{time},</if>
+            <if test="patientvideo != null  and patientvideo != ''">#{patientvideo},</if>
+            <if test="others != null  and others != ''">#{others},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePatientreport" parameterType="Patientreport">
+        update patientreport
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientid != null  and patientid != ''">patientID = #{patientid},</if>
+            <if test="patientname != null  and patientname != ''">patientName = #{patientname},</if>
+            <if test="doctor != null  and doctor != ''">doctor = #{doctor},</if>
+            <if test="patientinfomation != null  and patientinfomation != ''">patientInfomation = #{patientinfomation},</if>
+            <if test="patientphoto != null  and patientphoto != ''">patientPhoto = #{patientphoto},</if>
+            <if test="patientprogramme != null  and patientprogramme != ''">patientProgramme = #{patientprogramme},</if>
+            <if test="patientstatus != null  and patientstatus != ''">patientstatus = #{patientstatus},</if>
+            <if test="clinic != null  and clinic != ''">clinic = #{clinic},</if>
+            <if test="area != null  and area != ''">area = #{area},</if>
+            <if test="time != null ">time = #{time},</if>
+            <if test="patientvideo != null  and patientvideo != ''">patientvideo = #{patientvideo},</if>
+            <if test="others != null  and others != ''">others = #{others},</if>
+        </trim>
+        where reportID = #{reportid}
+    </update>
+
+    <delete id="deletePatientreportById" parameterType="Long">
+        delete from patientreport where reportID = #{reportid}
+    </delete>
+
+    <delete id="deletePatientreportByIds" parameterType="String">
+        delete from patientreport where reportID in 
+        <foreach item="reportid" collection="array" open="(" separator="," close=")">
+            #{reportid}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>博恩生物病历管理系统</title>
+    <meta name="description" content="博恩生物病历管理系统">
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link href="../static/css/login.min.css" th:href="@{/css/login.min.css}" rel="stylesheet"/>
+    <link href="../static/ruoyi/css/ry-ui.css" th:href="@{/ruoyi/css/ry-ui.css?v=4.0.0}" rel="stylesheet"/>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <!--<link rel="shortcut icon" href="../static/favicon.ico" th:href="@{favicon.ico}"/>-->
+    <style type="text/css">label.error { position:inherit;  }</style>
+    <script>
+        if(window.top!==window.self){window.top.location=window.location};
+    </script>
+</head>
+<body class="signin">
+<div style="position: relative;top:8%;left:2%;">
+    <!--<img src="/img/bone.png" height="71" width="142" style="position: relative;top:2px;"/>-->
+    <img src="/img/bonelogo-sy1.png" height="71" width="233" style="position: relative;top:8px;"/>
+</div>
+<div class="signinpanel" style="positon:relative;left:-25px;">
+    <div class="row">
+        <div class="col-sm-9">
+            <div class="signin-info">
+                <div class="logopanel m-b">
+                    <!--<h1><img alt="[ 博恩生物 ]" src="../static/bone4.png" th:src="@{/bone4.png}"></h1>-->
+                </div>
+                <div class="m-b"></div>
+                <!--<h4>欢迎使用 <strong>博恩生物</strong></h4>-->
+            </div>
+            <div class="col-sm-12" style="margin-left:15%;margin-top:-25px;position: relative;left:-35px;">
+                <div style="height: 150px;background-color: rgb(60,141,188);border:2px solid;border-top-left-radius:15px;
+                    border-top-right-radius: 15px; ">
+                    <h2 class="text-center" style="position:relative;top:25%;">博恩生物病历管理系统</h2>
+                </div>
+                <form id="signupForm">
+                    <!--<h3 class="no-margins">登录：</h3>-->
+
+                    <div style="margin-left:20%;margin-top:-20px;">
+                        <!--<div class="col-xs-9">-->
+                        <!--<input type="text" name="username"  class="uname" placeholder="请输入用户名">-->
+                        <!--</div>-->
+                        <!--<div class="col-xs-9">-->
+                        <!--<input type="password" name="password"  class="pword" placeholder="请输入密码">-->
+                        <!--</div>-->
+                        <div class="col-xs-12 col-lg-9 col-sm-9 col-md-12" >
+                            <input type="text"     name="username" style="width:117%;margin:5px;height:35px;color:black;position:relative;left:-16.5%;"  placeholder="请输入用户名"/>
+                        </div>
+                        <div class="col-xs-12 col-lg-9 col-sm-9 col-md-12">
+                            <input type="password" name="password" style="width:117%;margin:5px;height:35px;color:black;position:relative;left:-16.5%;"  placeholder="请输入密码"/>
+                        </div>
+                        <!--<div class="col-xs-9">-->
+                        <!--<input type="text"     name="username" class="form-control uname"     placeholder="用户名" value="" required/>-->
+                        <!--</div>-->
+                        <!--<div class="col-xs-9">-->
+                        <!--<input type="password" name="password" class="form-control pword"    placeholder="密码"   value=""  required/>-->
+                        <!--</div>-->
+                        <!--<div class="row m-t col-xs-5 " th:if="${captchaEnabled==true}">-->
+                        <div class="row">
+                            <div class="col-xs-5" th:if="${captchaEnabled==true}">
+                                <input type="text" name="validateCode" class="form-control code" placeholder="验证码" maxlength="5" style="width:115%;position: relative;left:-12.7%;top:10px;" autocomplete="off">
+                            </div>
+                            <div class="col-xs-4" style="margin-left:-2%;top:10px;">
+                                <a href="javascript:void(0);" title="点击更换验证码">
+                                    <img th:src="@{captcha/captchaImage(type=${captchaType})}" class="imgcode"  height="32px"/>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="checkbox-custom" th:classappend="${captchaEnabled==false} ? 'm-t'" style="position:relative;top:15px;left:-4.5%;">
+                            <input type="checkbox" id="rememberme" name="rememberme"> <label for="rememberme" style="color:#3c8dbc">记住我</label>
+                        </div>
+                        <!--<button class="btn btn-success btn-block col-xs-4" id="btnSubmit" data-loading="正在验证登录，请稍后...">登录</button>-->
+                        <button class="btn-success btn-block" id="btnSubmit" data-loading="正在验证登录，请稍后..." style="width:52%;height:35px;position:relative;top:15px;position:relative;left:9%;">登录</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="signup-footer" style="margin-top:10%;">
+
+        <div class="text-center" style="color:#080808;font-size:1.2em;font-family:微软雅黑;position:relative;left:-5%;">
+
+            <address>地址：西安市长安区王寺东街协同创新港银河A座3层 </address>
+            <p>全国统一售后&nbsp;&nbsp;<span class="glyphicon glyphicon-phone-alt"></span>&nbsp;400-0029-666</p>
+        </div>
+
+        <!--<p> &copy; 2019 All Rights Reserved.bone </p>-->
+
+    </div>
+</div>
+<script th:inline="javascript"> var ctx = [[@{/}]]; var captchaType = [[${captchaType}]]; </script>
+<!-- 全局js -->
+<script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<!-- 验证插件 -->
+<script src="../static/ajax/libs/validate/jquery.validate.min.js" th:src="@{/ajax/libs/validate/jquery.validate.min.js}"></script>
+<script src="../static/ajax/libs/validate/messages_zh.min.js" th:src="@{/ajax/libs/validate/messages_zh.min.js}"></script>
+<script src="../static/ajax/libs/layer/layer.min.js" th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+<script src="../static/ajax/libs/blockUI/jquery.blockUI.js" th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+<script src="../static/ruoyi/js/ry-ui.js" th:src="@{/ruoyi/js/ry-ui.js?v=4.0.0}"></script>
+<script src="../static/ruoyi/login.js" th:src="@{/ruoyi/login.js}"></script>
+</body>
+</html>

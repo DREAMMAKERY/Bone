@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.PatientinfoMapper">
+    
+    <resultMap type="Patientinfo" id="PatientinfoResult">
+        <result property="patientid"    column="patientID"    />
+        <result property="patientid2"    column="patientID2"    />
+        <result property="patientname"    column="patientName"    />
+        <result property="patientsex"    column="patientSex"    />
+        <result property="patientage"    column="patientAge"    />
+        <result property="patientx1"    column="patientX1"    />
+        <result property="patientx2"    column="patientX2"    />
+        <result property="patientuptooth"    column="patientUpTooth"    />
+        <result property="patientdowntooth"    column="patientDownTooth"    />
+        <result property="patientrighttooth"    column="patientRightTooth"    />
+        <result property="patientlefttooth"    column="patientLeftTooth"    />
+        <result property="patientforwordtooth"    column="patientForwordTooth"    />
+        <result property="patientpositive"    column="patientPositive"    />
+        <result property="patientposivemile"    column="patientPosiveMile"    />
+        <result property="patientleftofside"    column="patientLeftOfSide"    />
+        <result property="patientrightofside"    column="patientRightOfSide"    />
+        <result property="patientscandata"    column="patientScanData"    />
+        <result property="patientbonedensity"    column="patientBoneDensity"    />
+        <result property="patientsenddata"    column="patientSendData"    />
+        <result property="patientorderid"    column="patientOrderId"    />
+        <result property="doctoradvice"    column="doctorAdvice"    />
+        <result property="docotorsendtime"    column="docotorSendTime"    />
+        <result property="doctor"    column="doctor"    />
+        <result property="clinic"    column="clinic"    />
+        <result property="region"    column="region"    />
+        <result property="fileuploader"    column="fileuploader"    />
+        <result property="others"    column="others"    />
+    </resultMap>
+
+    <sql id="selectPatientinfoVo">
+        select patientID, patientID2, patientName, patientSex, patientAge, patientX1, patientX2, patientUpTooth, patientDownTooth, patientRightTooth, patientLeftTooth, patientForwordTooth, patientPositive, patientPosiveMile, patientLeftOfSide, patientRightOfSide, patientScanData,patientBoneDensity,patientSendData, patientOrderId, doctorAdvice, docotorSendTime, doctor, clinic, region, fileuploader, others from patientinfo
+        order by patientID desc
+    </sql>
+
+    <select id="selectPatientinfoList" parameterType="Patientinfo" resultMap="PatientinfoResult">
+        <include refid="selectPatientinfoVo"/>
+        <where>  
+            <if test="patientid2 != null  and patientid2 != ''"> and patientID2 = #{patientid2}</if>
+            <if test="patientname != null  and patientname != ''"> and patientName like concat('%', #{patientname}, '%')</if>
+            <if test="patientsex != null  and patientsex != ''"> and patientSex = #{patientsex}</if>
+            <if test="patientage != null  and patientage != ''"> and patientAge = #{patientage}</if>
+            <if test="patientx1 != null  and patientx1 != ''"> and patientX1 = #{patientx1}</if>
+            <if test="patientx2 != null  and patientx2 != ''"> and patientX2 = #{patientx2}</if>
+            <if test="patientuptooth != null  and patientuptooth != ''"> and patientUpTooth = #{patientuptooth}</if>
+            <if test="patientdowntooth != null  and patientdowntooth != ''"> and patientDownTooth = #{patientdowntooth}</if>
+            <if test="patientrighttooth != null  and patientrighttooth != ''"> and patientRightTooth = #{patientrighttooth}</if>
+            <if test="patientlefttooth != null  and patientlefttooth != ''"> and patientLeftTooth = #{patientlefttooth}</if>
+            <if test="patientforwordtooth != null  and patientforwordtooth != ''"> and patientForwordTooth = #{patientforwordtooth}</if>
+            <if test="patientpositive != null  and patientpositive != ''"> and patientPositive = #{patientpositive}</if>
+            <if test="patientposivemile != null  and patientposivemile != ''"> and patientPosiveMile = #{patientposivemile}</if>
+            <if test="patientleftofside != null  and patientleftofside != ''"> and patientLeftOfSide = #{patientleftofside}</if>
+            <if test="patientrightofside != null  and patientrightofside != ''"> and patientRightOfSide = #{patientrightofside}</if>
+            <if test="patientscandata != null  and patientscandata != ''"> and patientScanData = #{patientscandata}</if>
+            <if test="patientbonedensity != null  and patientbonedensity != ''"> and patientBoneDensity = #{patientbonedensity}</if>
+            <if test="patientsenddata != null  and patientsenddata != ''"> and patientSendData = #{patientsenddata}</if>
+            <if test="patientorderid != null  and patientorderid != ''"> and patientOrderId = #{patientorderid}</if>
+            <if test="doctoradvice != null  and doctoradvice != ''"> and doctorAdvice = #{doctoradvice}</if>
+            <if test="docotorsendtime != null "> and docotorSendTime = #{docotorsendtime}</if>
+            <if test="doctor != null  and doctor != ''"> and doctor = #{doctor}</if>
+            <if test="clinic != null  and clinic != ''"> and clinic = #{clinic}</if>
+            <if test="region != null  and region != ''"> and region = #{region}</if>
+            <if test="fileuploader != null  and fileuploader != ''"> and fileuploader = #{fileuploader}</if>
+            <if test="others != null  and others != ''"> and others = #{others}</if>
+        </where>
+    </select>
+    
+    <select id="selectPatientinfoById" parameterType="Long" resultMap="PatientinfoResult">
+        <include refid="selectPatientinfoVo"/>
+        where patientID = #{patientid}
+    </select>
+        
+    <insert id="insertPatientinfo" parameterType="Patientinfo" useGeneratedKeys="true" keyProperty="patientid">
+        insert into patientinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientid2 != null  and patientid2 != ''">patientID2,</if>
+            <if test="patientname != null  and patientname != ''">patientName,</if>
+            <if test="patientsex != null  and patientsex != ''">patientSex,</if>
+            <if test="patientage != null  and patientage != ''">patientAge,</if>
+            <if test="patientx1 != null  and patientx1 != ''">patientX1,</if>
+            <if test="patientx2 != null  and patientx2 != ''">patientX2,</if>
+            <if test="patientuptooth != null  and patientuptooth != ''">patientUpTooth,</if>
+            <if test="patientdowntooth != null  and patientdowntooth != ''">patientDownTooth,</if>
+            <if test="patientrighttooth != null  and patientrighttooth != ''">patientRightTooth,</if>
+            <if test="patientlefttooth != null  and patientlefttooth != ''">patientLeftTooth,</if>
+            <if test="patientforwordtooth != null  and patientforwordtooth != ''">patientForwordTooth,</if>
+            <if test="patientpositive != null  and patientpositive != ''">patientPositive,</if>
+            <if test="patientposivemile != null  and patientposivemile != ''">patientPosiveMile,</if>
+            <if test="patientleftofside != null  and patientleftofside != ''">patientLeftOfSide,</if>
+            <if test="patientrightofside != null  and patientrightofside != ''">patientRightOfSide,</if>
+            <if test="patientscandata != null  and patientscandata != ''">patientScanData,</if>
+            <if test="patientbonedensity != null  and patientbonedensity != ''">patientBoneDensity,</if>
+            <if test="patientsenddata != null  and patientsenddata != ''">patientSendData,</if>
+            <if test="patientorderid != null  and patientorderid != ''">patientOrderId,</if>
+            <if test="doctoradvice != null  and doctoradvice != ''">doctorAdvice,</if>
+            <if test="docotorsendtime != null ">docotorSendTime,</if>
+            <if test="doctor != null  and doctor != ''">doctor,</if>
+            <if test="clinic != null  and clinic != ''">clinic,</if>
+            <if test="region != null  and region != ''">region,</if>
+            <if test="fileuploader != null  and fileuploader != ''">fileuploader,</if>
+            <if test="others != null  and others != ''">others,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientid2 != null  and patientid2 != ''">#{patientid2},</if>
+            <if test="patientname != null  and patientname != ''">#{patientname},</if>
+            <if test="patientsex != null  and patientsex != ''">#{patientsex},</if>
+            <if test="patientage != null  and patientage != ''">#{patientage},</if>
+            <if test="patientx1 != null  and patientx1 != ''">#{patientx1},</if>
+            <if test="patientx2 != null  and patientx2 != ''">#{patientx2},</if>
+            <if test="patientuptooth != null  and patientuptooth != ''">#{patientuptooth},</if>
+            <if test="patientdowntooth != null  and patientdowntooth != ''">#{patientdowntooth},</if>
+            <if test="patientrighttooth != null  and patientrighttooth != ''">#{patientrighttooth},</if>
+            <if test="patientlefttooth != null  and patientlefttooth != ''">#{patientlefttooth},</if>
+            <if test="patientforwordtooth != null  and patientforwordtooth != ''">#{patientforwordtooth},</if>
+            <if test="patientpositive != null  and patientpositive != ''">#{patientpositive},</if>
+            <if test="patientposivemile != null  and patientposivemile != ''">#{patientposivemile},</if>
+            <if test="patientleftofside != null  and patientleftofside != ''">#{patientleftofside},</if>
+            <if test="patientrightofside != null  and patientrightofside != ''">#{patientrightofside},</if>
+            <if test="patientscandata != null  and patientscandata != ''">#{patientscandata},</if>
+            <if test="patientbonedensity != null  and patientbonedensity != ''">#{patientbonedensity},</if>
+            <if test="patientsenddata != null  and patientsenddata != ''">#{patientsenddata},</if>
+            <if test="patientorderid != null  and patientorderid != ''">#{patientorderid},</if>
+            <if test="doctoradvice != null  and doctoradvice != ''">#{doctoradvice},</if>
+            <if test="docotorsendtime != null ">#{docotorsendtime},</if>
+            <if test="doctor != null  and doctor != ''">#{doctor},</if>
+            <if test="clinic != null  and clinic != ''">#{clinic},</if>
+            <if test="region != null  and region != ''">#{region},</if>
+            <if test="fileuploader != null  and fileuploader != ''">#{fileuploader},</if>
+            <if test="others != null  and others != ''">#{others},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePatientinfo" parameterType="Patientinfo">
+        update patientinfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientid2 != null  and patientid2 != ''">patientID2 = #{patientid2},</if>
+            <if test="patientname != null  and patientname != ''">patientName = #{patientname},</if>
+            <if test="patientsex != null  and patientsex != ''">patientSex = #{patientsex},</if>
+            <if test="patientage != null  and patientage != ''">patientAge = #{patientage},</if>
+            <if test="patientx1 != null  and patientx1 != ''">patientX1 = #{patientx1},</if>
+            <if test="patientx2 != null  and patientx2 != ''">patientX2 = #{patientx2},</if>
+            <if test="patientuptooth != null  and patientuptooth != ''">patientUpTooth = #{patientuptooth},</if>
+            <if test="patientdowntooth != null  and patientdowntooth != ''">patientDownTooth = #{patientdowntooth},</if>
+            <if test="patientrighttooth != null  and patientrighttooth != ''">patientRightTooth = #{patientrighttooth},</if>
+            <if test="patientlefttooth != null  and patientlefttooth != ''">patientLeftTooth = #{patientlefttooth},</if>
+            <if test="patientforwordtooth != null  and patientforwordtooth != ''">patientForwordTooth = #{patientforwordtooth},</if>
+            <if test="patientpositive != null  and patientpositive != ''">patientPositive = #{patientpositive},</if>
+            <if test="patientposivemile != null  and patientposivemile != ''">patientPosiveMile = #{patientposivemile},</if>
+            <if test="patientleftofside != null  and patientleftofside != ''">patientLeftOfSide = #{patientleftofside},</if>
+            <if test="patientrightofside != null  and patientrightofside != ''">patientRightOfSide = #{patientrightofside},</if>
+            <if test="patientscandata != null  and patientscandata != ''">patientScanData = #{patientscandata},</if>
+            <if test="patientbonedensity != null  and patientbonedensity != ''">patientBoneDensity = #{patientbonedensity},</if>
+            <if test="patientsenddata != null  and patientsenddata != ''">patientSendData = #{patientsenddata},</if>
+            <if test="patientorderid != null  and patientorderid != ''">patientOrderId = #{patientorderid},</if>
+            <if test="doctoradvice != null  and doctoradvice != ''">doctorAdvice = #{doctoradvice},</if>
+            <if test="docotorsendtime != null ">docotorSendTime = #{docotorsendtime},</if>
+            <if test="doctor != null  and doctor != ''">doctor = #{doctor},</if>
+            <if test="clinic != null  and clinic != ''">clinic = #{clinic},</if>
+            <if test="region != null  and region != ''">region = #{region},</if>
+            <if test="fileuploader != null  and fileuploader != ''">fileuploader = #{fileuploader},</if>
+            <if test="others != null  and others != ''">others = #{others},</if>
+        </trim>
+        where patientID = #{patientid}
+    </update>
+
+    <delete id="deletePatientinfoById" parameterType="Long">
+        delete from patientinfo where patientID = #{patientid}
+    </delete>
+
+    <delete id="deletePatientinfoByIds" parameterType="String">
+        delete from patientinfo where patientID in 
+        <foreach item="patientid" collection="array" open="(" separator="," close=")">
+            #{patientid}
+        </foreach>
+    </delete>
+    
+</mapper>

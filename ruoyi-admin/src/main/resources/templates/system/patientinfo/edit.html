@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改患者情况信息')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-patientinfo-edit" th:object="${patientinfo}">
+            <input name="patientid" th:field="*{patientid}" type="hidden">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">患者编号：</label>
+                <div class="col-sm-8">
+                    <textarea name="patientid2" class="form-control">[[*{patientid2}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">患者姓名：</label>
+                <div class="col-sm-8">
+                    <input name="patientname" th:field="*{patientname}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">性别：</label>
+                <div class="col-sm-8">
+                    <select name="patientsex" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">年龄：</label>
+                <div class="col-sm-8">
+                    <input name="patientage" th:field="*{patientage}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">全颌曲面断层X光片：</label>
+                <div class="col-sm-8">
+                    <input name="patientx1" th:field="*{patientx1}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">头颅侧位X光片：</label>
+                <div class="col-sm-8">
+                    <input name="patientx2" th:field="*{patientx2}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">上牙列：</label>
+                <div class="col-sm-8">
+                    <input name="patientuptooth" th:field="*{patientuptooth}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">下牙列：</label>
+                <div class="col-sm-8">
+                    <input name="patientdowntooth" th:field="*{patientdowntooth}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">右侧磨牙关系：</label>
+                <div class="col-sm-8">
+                    <input name="patientrighttooth" th:field="*{patientrighttooth}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">左侧磨牙关系：</label>
+                <div class="col-sm-8">
+                    <input name="patientlefttooth" th:field="*{patientlefttooth}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">前牙咬合：</label>
+                <div class="col-sm-8">
+                    <input name="patientforwordtooth" th:field="*{patientforwordtooth}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">正面：</label>
+                <div class="col-sm-8">
+                    <input name="patientpositive" th:field="*{patientpositive}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">正面微笑：</label>
+                <div class="col-sm-8">
+                    <input name="patientposivemile" th:field="*{patientposivemile}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">左侧面：</label>
+                <div class="col-sm-8">
+                    <input name="patientleftofside" th:field="*{patientleftofside}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">右侧面：</label>
+                <div class="col-sm-8">
+                    <input name="patientrightofside" th:field="*{patientrightofside}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">口腔扫描数据：</label>
+                <div class="col-sm-8">
+                    <input name="patientscandata" th:field="*{patientscandata}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">骨密度数据：</label>
+                <div class="col-sm-8">
+                    <input name="patientbonedensity" th:field="*{patientbonedensity}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否有快递数据：</label>
+                <div class="col-sm-8">
+                    <input name="patientsenddata" th:field="*{patientsenddata}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">快递单号：</label>
+                <div class="col-sm-8">
+                    <input name="patientorderid" th:field="*{patientorderid}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">医生诉求：</label>
+                <div class="col-sm-8">
+                    <textarea name="doctoradvice" class="form-control">[[*{doctoradvice}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">提交时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input name="docotorsendtime" th:value="${#dates.format(patientinfo.docotorsendtime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">医生：</label>
+                <div class="col-sm-8">
+                    <textarea name="doctor" class="form-control">[[*{doctor}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">诊所：</label>
+                <div class="col-sm-8">
+                    <textarea name="clinic" class="form-control">[[*{clinic}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">地区：</label>
+                <div class="col-sm-8">
+                    <textarea name="region" class="form-control">[[*{region}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">上传者：</label>
+                <div class="col-sm-8">
+                    <textarea name="fileuploader" class="form-control">[[*{fileuploader}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <input name="others" th:field="*{others}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script type="text/javascript">
+        var prefix = ctx + "system/patientinfo";
+        $("#form-patientinfo-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-patientinfo-edit').serialize());
+            }
+        }
+
+        $("input[name='docotorsendtime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>

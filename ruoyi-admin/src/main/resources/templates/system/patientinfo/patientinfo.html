@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('患者情况信息列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <p>患者编号：</p>
+                                <input type="text" name="patientid2"/>
+                            </li>
+                            <li>
+                                <p>患者姓名：</p>
+                                <input type="text" name="patientname"/>
+                            </li>
+                            <li>
+                                <p>性别：</p>
+                                <select name="patientsex" th:with="type=${@dict.getType('')}">
+                                    <option value="">所有</option>
+                                    <option>男</option>
+                                    <option>女</option>
+                                    <!--<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>-->
+                                </select>
+                            </li>
+                            <li>
+                                <p>年龄：</p>
+                                <input type="text" name="patientage"/>
+                            </li>
+                            <!--<li>-->
+                                <!--<p>全颌曲面断层X光片：</p>-->
+                                <!--<input type="text" name="patientx1"/>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<p>头颅侧位X光片：</p>-->
+                                <!--<input type="text" name="patientx2"/>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<p>上牙列：</p>-->
+                                <!--<input type="text" name="patientuptooth"/>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<p>下牙列：</p>-->
+                                <!--<input type="text" name="patientdowntooth"/>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<p>右侧磨牙关系：</p>-->
+                                <!--<input type="text" name="patientrighttooth"/>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<p>左侧磨牙关系：</p>-->
+                                <!--<input type="text" name="patientlefttooth"/>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<p>前牙咬合：</p>-->
+                                <!--<input type="text" name="patientforwordtooth"/>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<p>正面：</p>-->
+                                <!--<input type="text" name="patientpositive"/>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<p>正面微笑：</p>-->
+                                <!--<input type="text" name="patientposivemile"/>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<p>左侧面：</p>-->
+                                <!--<input type="text" name="patientleftofside"/>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<p>右侧面：</p>-->
+                                <!--<input type="text" name="patientrightofside"/>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<p>口腔扫描数据：</p>-->
+                                <!--<input type="text" name="patientscandata"/>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<p>是否有快递数据：</p>-->
+                                <!--<input type="text" name="patientsenddata"/>-->
+                            <!--</li>-->
+                            <li>
+                                <p>快递单号：</p>
+                                <input type="text" name="patientorderid"/>
+                            </li>
+                            <li class="select-time">
+                                <p>提交时间：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginDocotorsendtime]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endDocotorsendtime]"/>
+                            </li>
+                            <!--<li>-->
+                                <!--<p>备注：</p>-->
+                                <!--<input type="text" name="others"/>-->
+                            <!--</li>-->
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <!--<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:patientinfo:add" shiro:hasRole="admin">-->
+                    <!--<i class="fa fa-plus"></i> 添加-->
+                <!--</a>-->
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:patientinfo:edit"  shiro:hasRole="admin">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:patientinfo:remove" shiro:hasRole="admin">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:patientinfo:export" shiro:hasRole="admin">
+                    <i class="fa fa-download"></i> 导出
+                 </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:patientinfo:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:patientinfo:remove')}]];
+        var prefix = ctx + "system/patientinfo";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "患者情况信息",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field : 'patientid', 
+                    title : '编号',
+                    visible: false
+                },
+                {
+                    field : 'patientid2', 
+                    title : '患者编号'
+                },
+                {
+                    field : 'patientx1', 
+                    title : '全颌曲面断层X光片',
+                    visible: false,
+                    formatter: function (value, row, index) {
+                        return '<img src="' + value + '" width="100" height="100">';
+                    }
+                },
+                {
+                    field : 'patientx2', 
+                    title : '头颅侧位X光片',
+                    visible: false,
+                    formatter: function (value, row, index) {
+                        return '<img src="' + value + '" width="100" height="100">';
+                    }
+                },
+                {
+                    field : 'patientuptooth', 
+                    title : '上牙列',
+                    visible: false,
+                    formatter: function (value, row, index) {
+                        return '<img src="' + value + '" width="100" height="100">';
+                    }
+                },
+                {
+                    field : 'patientdowntooth', 
+                    title : '下牙列',
+                    visible: false,
+                    formatter: function (value, row, index) {
+                        return '<img src="' + value + '" width="100" height="100">';
+                    }
+                },
+                {
+                    field : 'patientrighttooth', 
+                    title : '右侧磨牙关系',
+                    visible: false,
+                    formatter: function (value, row, index) {
+                        return '<img src="' + value + '" width="100" height="100">';
+                    }
+
+                },
+                {
+                    field : 'patientlefttooth', 
+                    title : '左侧磨牙关系',
+                    visible: false,
+                    formatter: function (value, row, index) {
+                        return '<img src="' + value + '" width="100" height="100">';
+                    }
+
+                },
+                {
+                    field : 'patientforwordtooth', 
+                    title : '前牙咬合',
+                    visible: false,
+                    formatter: function (value, row, index) {
+                        return '<img src="' + value + '" width="100" height="100">';
+                    }
+
+                },
+                {
+                    field : 'patientpositive', 
+                    title : '正面',
+                    visible: false,
+                    formatter: function (value, row, index) {
+                        return '<img src="' + value + '" width="100" height="100">';
+                    }
+
+                },
+                {
+                    field : 'patientposivemile', 
+                    title : '正面微笑',
+                    formatter: function (value, row, index) {
+                        return '<img src="' + value + '" width="100" height="100">';
+                    }
+
+                },
+                {
+                    field : 'patientleftofside', 
+                    title : '左侧面',
+                    width:'100px',
+                    height:'100px',
+                    visible: false,
+                    formatter: function (value, row, index) {
+                      return '<img src="' + value + '" width="100" height="100">';
+                    }
+
+                },
+                {
+                    field : 'patientrightofside', 
+                    title : '右侧面',
+                    visible: false,
+                    formatter: function (value, row, index) {
+                        return '<img src="' + value + '" width="100" height="100">';
+                    }
+
+                },
+                {
+                    width:'200px',
+                    field : 'patientscandata', 
+                    title : '口腔扫描数据',
+                    formatter: function (value, row, index) {
+                        // return '<img src="' + value + '" width="330" height="260">';
+                        return '<a href="' + value + '" ><b>口腔扫描数据下载</b></a>';
+                    }
+                },
+                    {
+                        width:'200px',
+                        field : 'patientbonedensity',
+                        title : '骨密度数据',
+                        formatter: function (value, row, index) {
+                            // return '<img src="' + value + '" width="330" height="260">';
+                            return '<a href="' + value + '" ><b>骨密度数据下载</b></a>';
+                        }
+                    },
+                {
+                    field : 'patientsenddata', 
+                    title : '是否有快递数据'
+                },
+                {
+                    field : 'patientorderid', 
+                    title : '快递单号'
+                },
+                    {
+                        field : 'doctor',
+                        title : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            '医生'+
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                    },
+                    {
+                        field : 'doctoradvice',
+                        title : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;医生诉求' +
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                    },
+                    {
+                        field : 'patientname',
+                        title : '患者姓名'
+                    },
+                    {
+                        field : 'patientsex',
+                        title : '性别'
+                    },
+                    {
+                        field : 'patientage',
+                        title : '年龄'
+                    },
+
+                {
+                    field : 'docotorsendtime',
+                    title : '提交时间'
+                },
+
+                {
+                    field : 'clinic', 
+                    title :  '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +'诊所'+ '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                },
+                {
+                    field : 'region', 
+                    title :  '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +'地区'+ '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                },
+                {
+                    field : 'fileuploader', 
+                    title : '上传者'
+                },
+                {
+                    field : 'others', 
+                    title : '备注'}
+                // },
+                // {
+                //     title: '操作',
+                //     align: 'center',
+                //     formatter: function(value, row, index) {
+                //         var actions = [];
+                //         actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.patientid + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                //         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.patientid + '\')"><i class="fa fa-remove"></i>删除</a>');
+                //         return actions.join('');
+                //     }
+                // }
+                    ]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

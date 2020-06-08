@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增患者情况信息')" />
+    <th:block th:include="include :: datetimepicker-css" />
+    <th:block th:include="include :: select2-css" />
+    <th:block th:include="include :: bootstrap-fileinput-css" />
+    <link href="../static/css/main/style.min862f.css" th:href="@{/css/main/style.min862f.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="../../../static/css/sweetalert.css" th:href="@{/css/sweetalert.css}">
+    <script th:src="@{/js/sweetalert.min.js}"></script>
+    <!--<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>-->
+</head>
+<body class="white-bg">
+<div class="main-content">
+    <form class="form-horizontal" id="form-patientinfo-add">
+        <h4 class="form-header h4"><span style="color:red;">*</span>请输入患者信息</h4>
+        <div class="row" style="position: relative;top:20px;">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="col-sm-5 control-label"><span style="color:red;">*</span>患者编号：</label>
+                    <div class="col-sm-7">
+                        <input name="patientID2" class="form-control" type="text" id="patientID2"  onfocus="getRandomCode(32)" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label class="col-sm-5 control-label"><span style="color:red;">*</span>姓名：</label>
+                    <div class="col-sm-7">
+                        <input name="patientname" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label class="col-sm-5 control-label"><span style="color:red;">*</span>性别：</label>
+                    <div class="col-sm-5">
+                        <!--<select name="patientSex" class="form-control m-b" th:with="type=${@dict.getType('sys_user_sex')}">-->
+                        <!--<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>-->
+                        <!--</select>-->
+                        <select name="patientSex" class="form-control m-b">
+                            <option>男</option>
+                            <option>女</option>
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color:red;">*</span>年龄：</label>
+                    <div class="col-sm-6">
+                        <input name="patientage" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color:red;">*</span>提交时间：</label>
+                    <div class="col-sm-8">
+                        <div class="input-group date">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            <input name="docotorsendtime" class="form-control" placeholder="yyyy-MM-dd" type="text" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--X光片-->
+        <h4 class="form-header h4"><span style="color:red;">*</span>请上传患者X光片</h4>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 form-group">
+                    <label class=" control-label "><span style="color:red;">*</span>全颌曲面断层X光片：</label>
+                    <input id="patientx1"  name="patientx1" class="form-control fileinput-demo-1" type="file" data-browse-on-zone-click="true" multiple>
+                </div>
+                <div class="col-sm-3 form-group">
+                    <label class="control-label"><span style="color:red;">*</span>头颅侧位X光片：</label>
+                    <input id="patientx2" name="patientx2" class="form-control fileinput-demo-1" type="file" data-browse-on-zone-click="true" multiple>
+                </div>
+            </div>
+        </div>
+        <!--患者面部照片-->
+        <h4 class="form-header h4"><span style="color:red;">*</span>请上传患者牙齿照片</h4>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 form-group">
+                    <label class="control-label"><span style="color:red;">*</span>上牙列：</label>
+                    <input id="patientuptooth"  name="patientuptooth" class="form-control fileinput-demo-1" type="file">
+                </div>
+                <div class="col-sm-3 form-group">
+                    <label class="control-label"><span style="color:red;">*</span>下牙列：</label>
+
+                    <input id="patientdowntooth" name="patientdowntooth" class="form-control fileinput-demo-1" type="file">
+                </div>
+                <div class="col-sm-3 form-group">
+                    <label class="control-label"><span style="color:red;">*</span>前牙咬合：</label>
+
+                    <input id="patientforwordtooth" name="patientforwordtooth" class="form-control fileinput-demo-1" type="file" multiple >
+                </div>
+                <div class="col-sm-3 form-group">
+                    <label class="control-label"><span style="color:red;">*</span>左侧磨牙关系：</label>
+                    <input id="patientlefttooth" name="patientlefttooth" class="form-control fileinput-demo-1" type="file" multiple>
+                </div>
+                <div class="col-sm-3 form-group">
+                    <label class=" control-label"><span style="color:red;">*</span>右侧磨牙关系：</label>
+                    <input id="patientrighttooth" name="patientrighttooth" class="form-control fileinput-demo-1" type="file" multiple>
+                </div>
+            </div>
+        </div>
+        <h4 class="form-header h4"><span style="color:red;">*</span>请上传患者面部照片</h4>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 form-group">
+                    <label class="control-label"><span style="color:red;">*</span>正面：</label>
+                    <input id="patientpositive" name="patientpositive" class="form-control fileinput-demo-1" type="file" multiple>
+                </div>
+                <div class="col-sm-3 form-group">
+                    <label class="control-label"><span style="color:red;">*</span>正面微笑：</label>
+                    <input id="patientposivemile" name="patientposivemile" class="form-control fileinput-demo-1" type="file" multiple>
+                </div>
+                <div class="col-sm-3 form-group">
+                    <label class="control-label"><span style="color:red;">*</span>左侧面：</label>
+                    <input id="patientleftofside" name="patientleftofside" class="form-control fileinput-demo-1" type="file" multiple>
+                </div>
+
+                <div class="col-sm-3 form-group">
+                    <label class="control-label"><span style="color:red;">*</span>右侧面：</label>
+
+                    <input id="patientrightofside" name="patientrightofside" class="form-control fileinput-demo-1" type="file" multiple>
+                </div>
+            </div>
+        </div>
+        <h4 class="form-header h4">请上传患者口腔扫描文件</h4>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 form-group">
+                    <label class="control-label">口腔扫描数据：</label>
+                    <input id="patientscandata" name="patientscandata" class="form-control fileinput-demo-1" type="file" multiple>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 form-group">
+                    <label class="control-label">骨密度数据（复杂病例提交）：</label>
+                    <input id="patientbonedensity" name="patientbonedensity" class="form-control fileinput-demo-1" type="file" multiple>
+                </div>
+            </div>
+        </div>
+        <h4 class="form-header h4"></h4>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <!--<label class="col-sm-3 control-label">是否有快递数据：</label>-->
+                        <label class="toggle-switch switch-solid control-label">是否有快递数据：
+                            <input name="patientsenddata" type="checkbox" id="patientsenddata" checked>
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">快递单号：</label>
+                        <div class="col-sm-8">
+                            <input name="patientorderid" class="form-control" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label class="control-label"><span style="color:red;">*</span>医生诉求：</label>
+                    <textarea name="doctoradvice" class="form-control" placeholder="请输入医生医嘱及详细要求" required></textarea>
+                </div>
+            </div>
+        </div>
+        <h4 class="form-header h4"></h4>
+        <div class="row">
+            <div  class="col-sm-3 form-group">
+                <label class="col-sm-3 control-label"><span style="color:red;">*</span>医生：</label>
+                <div class="col-sm-9">
+                    <input id="doctor" name="doctor" class="form-control fileinput-demo-1" type="text" required>
+                </div>
+            </div>
+            <div  class="col-sm-3 form-group">
+                <label class="col-sm-3 control-label"><span style="color:red;">*</span>诊所：</label>
+                <div class="col-sm-9">
+                    <input id="clinic" name="clinic" class="form-control fileinput-demo-1" type="text" required>
+                </div>
+            </div>
+            <div  class="col-sm-3 form-group">
+                <label class="col-sm-3 control-label"><span style="color:red;">*</span>地区：</label>
+                <div class="col-sm-9">
+                    <input id="region" name="region" class="form-control fileinput-demo-1" type="text" required>
+                </div>
+            </div>
+            <div  class="col-sm-3 form-group">
+                <label class="col-sm-4 control-label"><span style="color:red;">*</span>上传者：</label>
+                <div class="col-sm-6">
+                    <input id="fileuploader" name="fileuploader" class="form-control fileinput-demo-1" type="text" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-offset-5 col-sm-10">
+                <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>提交</button>&nbsp;
+                <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: datetimepicker-js" />
+<th:block th:include="include :: bootstrap-fileinput-js" />
+<script type="text/javascript">
+    var prefix = ctx + "system/patientinfo"
+    $("#form-patientinfo-add").validate({
+        focusCleanup: true
+    });
+    function getRandomCode(length) {
+        if (length > 0) {
+            var data = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9",];
+            var nums = "";
+            for (var i = 0; i < 6; i++) {
+                var r = parseInt(Math.random() * 10);
+                nums += data[r];
+            }
+            date=new Date();
+            date2=date.getFullYear()+""+(date.getMonth()+1)+""+date.getDate();
+            document.getElementById("patientID2").value="BONE_"+date2+nums;
+
+        } else {
+            return alert("请输入正确的数字");
+        }
+    }
+
+    var patientID2=''
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            patientID2=document.getElementById('patientID2').value;
+
+            $.modal.confirm("确认提交吗？请保存好您的患者编号！"+patientID2,function () {
+                $.operate.save(prefix + "/add", $('#form-patientinfo-add').serialize());
+
+            })
+
+        }
+    }
+    $(document).ready(
+        function () {
+            $("#patientx1").fileinput({
+                'theme': 'explorer-fas',
+                'uploadUrl': prefix+'/uploadpatientx1',
+                overwriteInitial: true,
+                contentType: "application/json;charset=utf-8",
+                dropZoneEnabled:false,
+                // showUpload:false,
+                // showDelete:false,
+                showClose:false,
+                // showUploadThumbs:true,
+                // overwriteInitial:false,
+                initialPreviewAsData: true,
+                purifyHtml:false,
+                initialPreview: [
+                    "/img/patientx1.jpg",
+                ]
+            });
+
+            $("#patientx2").fileinput({
+                // 'theme': 'explorer-fas',
+                'uploadUrl': prefix+'/uploadpatientx2',
+                overwriteInitial: true,
+                contentType: "application/json;charset=utf-8",
+                dropZoneEnabled:false,
+                showClose:false,
+                initialPreviewAsData: true,
+                dropzoneEnabled:false,
+                initialPreview: [
+                    "/img/patientx2.jpeg"
+                ]
+            });
+            $("#patientuptooth").fileinput({
+                // 'theme': 'explorer-fas',
+                'uploadUrl': prefix+'/uploadpatientuptooth',
+                overwriteInitial: true,
+                contentType: "application/json;charset=utf-8",
+                dropZoneEnabled:false,
+                showClose:false,
+                initialPreviewAsData: true,
+                initialPreview: [
+                    "/img/patientuptooth.jpg"
+                ]
+            });
+            $("#patientdowntooth").fileinput({
+                // 'theme': 'explorer-fas',
+                'uploadUrl': prefix+'/uploadpatientdowntooth',
+                overwriteInitial:true,
+                contentType: "application/json;charset=utf-8",
+                initialPreviewAsData: true,
+                dropZoneEnabled:false,
+                showClose:false,
+                initialPreview: [
+                    "/img/patientdowntooth.jpg"
+                ]
+            });
+            $("#patientrighttooth").fileinput({
+                // 'theme': 'explorer-fas',
+                'uploadUrl': prefix+'/uploadpatientrighttooth',
+                overwriteInitial:true,
+                contentType: "application/json;charset=utf-8",
+                dropZoneEnabled:false,
+                showClose:false,
+                initialPreviewAsData: true,
+                initialPreview: [
+                    "/img/patientrighttooth.jpg"
+                ]
+            });
+            $("#patientlefttooth").fileinput({
+                // 'theme': 'explorer-fas',
+                'uploadUrl': prefix+'/uploadpatientlefttooth',
+                overwriteInitial: true,
+                contentType: "application/json;charset=utf-8",
+                dropZoneEnabled:false,
+                showClose:false,
+                initialPreviewAsData: true,
+                initialPreview: [
+                    "/img/patientlefttooth.jpg"
+                ]
+            });
+            $("#patientforwordtooth").fileinput({
+                // 'theme': 'explorer-fas',
+                'uploadUrl': prefix+'/uploadpatientforwordtooth',
+                overwriteInitial: true,
+                contentType: "application/json;charset=utf-8",
+                dropZoneEnabled:false,
+                showClose:false,
+                initialPreviewAsData: true,
+                initialPreview: [
+                    "/img/patientforwordtooth.jpg"
+                ]
+            });
+            $("#patientpositive").fileinput({
+                // 'theme': 'explorer-fas',
+                'uploadUrl': prefix+'/uploadpatientpositive',
+                overwriteInitial: true,
+                contentType: "application/json;charset=utf-8",
+                dropZoneEnabled:false,
+                showClose:false,
+                initialPreviewAsData: true,
+                initialPreview: [
+                    "/img/patientpositive.jpg"
+                ]
+            });
+            $("#patientposivemile").fileinput({
+                // 'theme': 'explorer-fas',
+                'uploadUrl': prefix+'/uploadpatientposivemile',
+                overwriteInitial: true,
+                contentType: "application/json;charset=utf-8",
+                initialPreviewAsData: true,
+                dropZoneEnabled:false,
+                showClose:false,
+                initialPreview: [
+                    "/img/patientposivemile.jpg"
+                ]
+            });
+            $("#patientleftofside").fileinput({
+                // 'theme': 'explorer-fas',
+                'uploadUrl': prefix+'/uploadpatientleftofside',
+                overwriteInitial: true,
+                contentType: "application/json;charset=utf-8",
+                dropZoneEnabled:false,
+                showClose:false,
+                initialPreviewAsData: true,
+                initialPreview: [
+                    "/img/patientleftofside.jpg"
+                ]
+            });
+            $("#patientrightofside").fileinput({
+                // 'theme': 'explorer-fas',
+                'uploadUrl': prefix+'/uploadpatientrightofside',
+                overwriteInitial: true,
+                contentType: "application/json;charset=utf-8",
+                dropZoneEnabled:false,
+                showClose:false,
+                initialPreviewAsData: true,
+                initialPreview: [
+                    "/img/patientrightofside.jpg"
+                ]
+            });
+            $("#patientscandata").fileinput({
+                // 'theme': 'explorer-fas',
+                'uploadUrl': prefix+'/uploadpatientscandataurl',
+                overwriteInitial: true,
+                contentType: "application/json;charset=utf-8",
+                dropZoneEnabled:false,
+                showClose:false,
+                initialPreviewAsData: true
+            });
+            $("#patientbonedensity").fileinput({
+                // 'theme': 'explorer-fas',
+                'uploadUrl': prefix+'/uploadpatientbonedensityurl',
+                overwriteInitial: true,
+                contentType: "application/json;charset=utf-8",
+                dropZoneEnabled:false,
+                showClose:false,
+                initialPreviewAsData: true
+            })
+        });
+
+    $("input[name='docotorsendtime']").datetimepicker({
+        format: "yyyy-mm-dd",
+        minView: "month",
+        autoclose: true
+    });
+</script>
+</body>
+</html>

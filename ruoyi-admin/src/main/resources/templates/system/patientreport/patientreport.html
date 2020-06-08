@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('患者报告单列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <p>患者编号：</p>
+                                <input type="text" name="patientid"/>
+                            </li>
+                            <li>
+                                <p>患者姓名：</p>
+                                <input type="text" name="patientname"/>
+                            </li>
+                            <li>
+                                <p>医生：</p>
+                                <input type="text" name="doctor"/>
+                            </li>
+                           <!-- <li>
+                                <p>患者状态：</p>
+                               <!-- <select name="patientstatus">
+                                    <option value="">所有</option>
+                                </select>-->
+                              <!--  <input type="text" name="patientstatus"/>
+                            </li>-->
+
+                            <li>
+                                <p>诊所：</p>
+                                <input type="text" name="clinic"/>
+                            </li>
+                            <li>
+                                <p>地区：</p>
+                                <input type="text" name="area"/>
+                            </li>
+                            <li class="select-time">
+                                <p>时间：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+          <!--      <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:patientreport:add" >
+                    <i class="fa fa-plus"></i> 添加
+                </a>-->
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:patientreport:edit" shiro:hasRole="admin">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:patientreport:remove" shiro:hasRole="admin">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:patientreport:export" shiro:hasRole="admin">
+                    <i class="fa fa-download"></i> 导出
+                 </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:patientreport:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:patientreport:remove')}]];
+        var prefix = ctx + "system/patientreport";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "患者报告单",
+                firstLoad:false,
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field : 'reportid', 
+                    title : '回执单编号',
+                    visible: false
+                },
+                {
+                    field : 'patientid', 
+                    title : '患者编号'
+                },
+                {
+                    field : 'patientname', 
+                    title : '患者姓名'
+                },
+                {
+                    field : 'doctor', 
+                    title : '医生'
+                },
+                {
+                    field : 'patientinfomation', 
+                    title : '患者情况反馈'
+                },
+                {
+                    field : 'patientphoto', 
+                    title : '患者方案（文件）',
+                    formatter: function (value, row, index) {
+                       // return '<img src="' + value + '" width="330" height="260">';
+                        return '<a href="' + value + '" ><b>方案下载</b></a>';
+                    }
+                },
+                    {
+                        field : 'patientprogramme',
+                        title :  '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +'患者方案'+
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                    },
+                {
+                    field : 'patientstatus', 
+                    title : '患者佩戴状态'
+                },
+                {
+                    field : 'clinic', 
+                    title : '诊所'
+                },
+                {
+                    field : 'area', 
+                    title : '地区'
+                },
+                {
+                    field : 'time', 
+                    title : '时间'
+                },
+                {
+                    field : 'patientvideo', 
+                    title : '矫治步骤视频',
+                    width :'530px',
+                    height:'480px',
+                    formatter: function (value, row, index) {
+                      //  return '<video src="' + value + '>';
+                        return '<video src="' + value + '" controls></video>';
+
+
+                    }
+                },
+                {
+                    field : 'others', 
+                    title : '意见'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.reportid + '\')"><i class="fa fa-edit"></i>意见填写</a> ');
+                     //   actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.reportid + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>
